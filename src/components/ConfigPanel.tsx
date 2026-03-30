@@ -21,6 +21,7 @@ export default function ConfigPanel() {
           className="input-field text-sm"
         >
           <option value="México">Mexico</option>
+          <option value="Estados Unidos">Estados Unidos</option>
           <option value="Colombia">Colombia</option>
           <option value="Argentina">Argentina</option>
           <option value="Chile">Chile</option>

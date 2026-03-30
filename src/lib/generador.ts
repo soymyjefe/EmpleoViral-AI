@@ -78,12 +78,12 @@ function generarPromptsImagen(
       {
         titulo: "Prompt B — Thumbnail con Texto",
         tipo: "thumbnail",
-        prompt: `Imagen de alto impacto visual en formato vertical 9:16 diseñada como thumbnail viral. Fondo con fotografía de un ambiente de trabajo relacionado con ${tema}, tratada con overlay oscuro semitransparente al 60% para máximo contraste. En el centro superior, texto grande en tipografía bold sans-serif blanca con borde negro que dice "SE BUSCAN" en mayúsculas. Debajo, en tipografía ligeramente menor pero igualmente bold, el texto "${tema.toUpperCase()}" en color amarillo brillante (#FFD700). En la parte inferior, un banner rojo con texto blanco "APLICA HOY". Composición centrada, simétrica, diseñada para captar la atención en menos de 1 segundo. Estilo de diseño gráfico para redes sociales, colores vibrantes de alto contraste.`,
+        prompt: `Imagen de alto impacto visual en formato vertical 9:16 diseñada como thumbnail viral. Fondo con fotografía de un ambiente de trabajo relacionado con ${tema}, tratada con overlay oscuro semitransparente al 60% para máximo contraste. En el centro superior, texto grande en tipografía bold sans-serif blanca con borde negro que dice "NOW HIRING" en mayúsculas. Debajo, en tipografía ligeramente menor pero igualmente bold, el texto "${tema.toUpperCase()}" en color amarillo brillante (#FFD700). En la parte inferior, un banner rojo con texto blanco "OPEN POSITIONS". Composición centrada, simétrica, diseñada para captar la atención en menos de 1 segundo. Estilo de diseño gráfico para redes sociales, colores vibrantes de alto contraste.`,
       },
       {
         titulo: "Prompt C — Póster Informativo",
         tipo: "poster",
-        prompt: `Póster informativo profesional en formato vertical 9:16 con fondo de fotografía desenfocada (bokeh) de un ambiente laboral relacionado con ${tema}. Sobre el fondo desenfocado, un panel semitransparente blanco con bordes redondeados ocupa el 70% central de la imagen. En la parte superior del panel, título en tipografía bold negra: "VACANTE: ${tema.toUpperCase()}". Debajo del título, tres filas con íconos minimalistas a la izquierda y texto descriptivo: ícono de dinero + "Salario competitivo", ícono de reloj + "Horario flexible", ícono de ubicación + "Varios establecimientos de tu zona". En la parte inferior del panel, botón con fondo naranja vibrante (#F97316) y texto blanco bold: "APLICA HOY". Estilo de diseño limpio y corporativo, tipografía moderna, colores cálidos profesionales.`,
+        prompt: `Póster informativo profesional en formato vertical 9:16 con fondo de fotografía desenfocada (bokeh) de un ambiente laboral relacionado con ${tema}. Sobre el fondo desenfocado, un panel semitransparente blanco con bordes redondeados ocupa el 70% central de la imagen. En la parte superior del panel, título en tipografía bold negra: "JOB OPENING: ${tema.toUpperCase()}". Debajo del título, tres filas con íconos minimalistas a la izquierda y texto descriptivo en inglés: ícono de dinero + "Competitive Salary", ícono de reloj + "Flexible Schedule", ícono de ubicación + "Multiple Locations". En la parte inferior del panel, botón con fondo naranja vibrante (#F97316) y texto blanco bold: "LEARN MORE". Estilo de diseño limpio y corporativo, tipografía moderna, colores cálidos profesionales.`,
       },
     ],
   };
@@ -94,8 +94,8 @@ function generarScriptsVideo(
   config: Configuracion
 ): SeccionScriptsVideo {
   const temaCapitalizado = tema.charAt(0).toUpperCase() + tema.slice(1);
-  const ctaTiktok = "link en mi perfil";
-  const ctaFacebook = "enlace en la descripción";
+  const ctaTiktok = "nuestro perfil para más detalles";
+  const ctaFacebook = "enviarnos un mensaje";
   const cta =
     config.plataforma === "facebook" ? ctaFacebook : ctaTiktok;
 
@@ -118,8 +118,8 @@ function generarScriptsVideo(
           },
           {
             segundo: "5–8 seg",
-            audio: `¡Aplica ahora mismo desde el ${cta}! Las vacantes no esperan!`,
-            accionPantalla: `Zoom out revelando el espacio completo. Banner CTA parpadeante: "APLICA HOY" con flecha animada.`,
+            audio: `¡Encuentra toda la info desde ${cta}! Las vacantes no esperan!`,
+            accionPantalla: `Zoom out revelando el espacio completo. Banner CTA parpadeante: "MÁS INFO EN NUESTRO PERFIL" con flecha animada.`,
           },
         ],
       },
@@ -140,8 +140,8 @@ function generarScriptsVideo(
           },
           {
             segundo: "Escena 3: 16–24 seg",
-            audio: `¡No dejes pasar esta oportunidad! Las vacantes de ${temaCapitalizado} se llenan en días. Entra al ${cta} y aplica ahora mismo!`,
-            accionPantalla: `Close-up de persona sonriendo satisfecha en su trabajo. Banner final: "APLICA HOY — ${cta.toUpperCase()}" con animación de pulso. Logo y URL.`,
+            audio: `¡No dejes pasar esta oportunidad! Las vacantes de ${temaCapitalizado} se llenan en días. Visita ${cta} para más información!`,
+            accionPantalla: `Close-up de persona sonriendo satisfecha en su trabajo. Banner final: "MÁS DETALLES DESDE NUESTRO PERFIL" con animación de pulso. Logo y URL.`,
           },
         ],
       },
@@ -160,12 +160,12 @@ function generarPromptsVideo(
       {
         titulo: "Versión A — TikTok (9:16)",
         plataforma: "TikTok",
-        prompt: `Dolly forward cinematográfico hacia una persona latina de 28 años, piel morena, cabello oscuro corto, vistiendo uniforme profesional limpio de ${tema}, que se prepara con determinación en su estación de trabajo. El escenario es un establecimiento real de ${tema} con iluminación cálida golden hour, equipos y herramientas del oficio visibles al fondo con bokeh suave. La cámara avanza suavemente mientras la persona realiza sus tareas con profesionalismo. Voiceover masculino joven en español latinoamericano, tono urgente y entusiasta: "¡Atención! Están buscando ${temaCapitalizado} y las vacantes se llenan rápido! Salario competitivo, horario flexible y no necesitas experiencia previa! ¡Aplica ahora mismo desde el link en mi perfil!" Audio ambiental sutil del entorno laboral de ${tema}. Música de fondo: beat urbano rítmico a volumen bajo. Color grading cálido cinematográfico con tonos dorados. Duración exacta: 8 segundos, 24 FPS, 1080p, formato vertical 9:16.`,
+        prompt: `Dolly forward cinematográfico hacia una persona latina de 28 años, piel morena, cabello oscuro corto, vistiendo uniforme profesional limpio de ${tema}, que se prepara con determinación en su estación de trabajo. El escenario es un establecimiento real de ${tema} con iluminación cálida golden hour, equipos y herramientas del oficio visibles al fondo con bokeh suave. La cámara avanza suavemente mientras la persona realiza sus tareas con profesionalismo. Voiceover masculino joven en español latinoamericano, tono urgente y entusiasta: "¡Atención! Están buscando ${temaCapitalizado} y las vacantes se llenan rápido! Salario competitivo, horario flexible y no necesitas experiencia previa! ¡Más detalles desde nuestro perfil!" Audio ambiental sutil del entorno laboral de ${tema}. Música de fondo: beat urbano rítmico a volumen bajo. Color grading cálido cinematográfico con tonos dorados. Duración exacta: 8 segundos, 24 FPS, 1080p, formato vertical 9:16.`,
       },
       {
         titulo: "Versión A — Facebook (16:9)",
         plataforma: "Facebook",
-        prompt: `Tracking shot lateral cinematográfico por un establecimiento de ${tema}, mostrando a una persona latina de 30 años, cabello recogido, uniforme profesional impecable, realizando sus labores con confianza y sonrisa sutil. El espacio está iluminado con luz cálida natural, ambiente profesional y acogedor. La cámara se desplaza suavemente revelando el entorno laboral completo. Voiceover femenino profesional en español latinoamericano, tono cálido y confiable: "¿Buscas empleo como ${temaCapitalizado}? Hay vacantes disponibles con salario competitivo y horarios flexibles. Encuentra toda la información en el enlace en la descripción." Audio ambiental del entorno de trabajo. Música de fondo: instrumental corporativo suave y motivacional. Color grading cálido con tonos naturales. Duración exacta: 8 segundos, 24 FPS, 1080p, formato horizontal 16:9.`,
+        prompt: `Tracking shot lateral cinematográfico por un establecimiento de ${tema}, mostrando a una persona latina de 30 años, cabello recogido, uniforme profesional impecable, realizando sus labores con confianza y sonrisa sutil. El espacio está iluminado con luz cálida natural, ambiente profesional y acogedor. La cámara se desplaza suavemente revelando el entorno laboral completo. Voiceover femenino profesional en español latinoamericano, tono cálido y confiable: "¿Buscas empleo como ${temaCapitalizado}? Hay vacantes disponibles con salario competitivo y horarios flexibles. Envíanos un mensaje para más información." Audio ambiental del entorno de trabajo. Música de fondo: instrumental corporativo suave y motivacional. Color grading cálido con tonos naturales. Duración exacta: 8 segundos, 24 FPS, 1080p, formato horizontal 16:9.`,
       },
       {
         titulo: "Versión B — Escena 1 TikTok (9:16)",
@@ -183,7 +183,7 @@ function generarPromptsVideo(
         titulo: "Versión B — Escena 3 TikTok (9:16)",
         plataforma: "TikTok",
         escena: 3,
-        prompt: `Medium close-up del mismo sujeto latino de 28 años (misma ropa, mismo look) sonriendo con satisfacción al completar una tarea como ${tema}. La cámara se acerca suavemente en un push-in emocional. Iluminación cálida golden hour envolvente. El sujeto mira brevemente a cámara con expresión invitadora. Voiceover masculino joven con urgencia de cierre: "¡No dejes pasar esta oportunidad! Las vacantes de ${temaCapitalizado} se llenan en días. Entra al link en mi perfil y aplica ahora mismo!" Sonido ambiental suave. Beat urbano con crescendo final. Color grading dorado. 8 segundos, 24 FPS, 1080p, 9:16.`,
+        prompt: `Medium close-up del mismo sujeto latino de 28 años (misma ropa, mismo look) sonriendo con satisfacción al completar una tarea como ${tema}. La cámara se acerca suavemente en un push-in emocional. Iluminación cálida golden hour envolvente. El sujeto mira brevemente a cámara con expresión invitadora. Voiceover masculino joven con urgencia de cierre: "¡No dejes pasar esta oportunidad! Las vacantes de ${temaCapitalizado} se llenan en días. Visita nuestro perfil para más detalles!" Sonido ambiental suave. Beat urbano con crescendo final. Color grading dorado. 8 segundos, 24 FPS, 1080p, 9:16.`,
       },
       {
         titulo: "Versión B — Escena 1 Facebook (16:9)",
@@ -201,7 +201,17 @@ function generarPromptsVideo(
         titulo: "Versión B — Escena 3 Facebook (16:9)",
         plataforma: "Facebook",
         escena: 3,
-        prompt: `Medium shot de la misma persona latina de 30 años (continuidad: mismo uniforme, cabello recogido) terminando su jornada con satisfacción, organizando su espacio de trabajo de ${tema} con una sonrisa genuina. La cámara realiza un slow pull-back elegante revelando el establecimiento completo. Voiceover femenino profesional con tono de cierre: "No dejes pasar esta oportunidad. Consulta los requisitos y aplica directamente desde el enlace en la descripción. Las vacantes son limitadas." Audio ambiental. Instrumental corporativo con resolución suave. Color grading cálido. 8 segundos, 24 FPS, 1080p, 16:9.`,
+        prompt: `Medium shot de la misma persona latina de 30 años (continuidad: mismo uniforme, cabello recogido) terminando su jornada con satisfacción, organizando su espacio de trabajo de ${tema} con una sonrisa genuina. La cámara realiza un slow pull-back elegante revelando el establecimiento completo. Voiceover femenino profesional con tono de cierre: "No dejes pasar esta oportunidad. Contáctanos por mensaje para conocer todos los detalles. Las vacantes son limitadas." Audio ambiental. Instrumental corporativo con resolución suave. Color grading cálido. 8 segundos, 24 FPS, 1080p, 16:9.`,
+      },
+      {
+        titulo: "Versión C — Narrativo TikTok (9:16) — Sin Diálogo",
+        plataforma: "TikTok",
+        prompt: `Secuencia cinematográfica puramente visual sin diálogos ni voiceover. Una persona latina de 28 años, piel morena, cabello oscuro corto, uniforme profesional de ${tema}, realiza sus tareas laborales con destreza y concentración. La cámara alterna entre: close-up de las manos trabajando, plano medio del sujeto en acción, y wide shot del establecimiento completo. Los personajes NO hablan ni miran a cámara en ningún momento — todo es observacional, estilo documental. Sin voiceover. Audio únicamente ambiental: sonidos reales del entorno de trabajo de ${tema} (utensilios, máquinas, ambiente). Música de fondo: beat lo-fi relajado y rítmico que transmite rutina y satisfacción laboral. Iluminación golden hour cálida, color grading cinematográfico dorado. Montaje fluido con transiciones suaves. Duración exacta: 8 segundos, 24 FPS, 1080p, formato vertical 9:16.`,
+      },
+      {
+        titulo: "Versión C — Narrativo Facebook (16:9) — Sin Diálogo",
+        plataforma: "Facebook",
+        prompt: `Secuencia cinematográfica puramente visual sin diálogos ni voiceover. Una persona latina de 30 años, cabello recogido, uniforme profesional impecable de ${tema}, realiza su jornada laboral con profesionalismo y calma. La cámara fluye como documental observacional: tracking shot siguiendo al sujeto mientras trabaja, insert shots de detalles del oficio, plano general del espacio laboral. Los personajes NO hablan ni interactúan con la cámara — todo es natural y espontáneo. Sin voiceover. Audio únicamente ambiental: sonidos auténticos del entorno de trabajo de ${tema}. Música de fondo: instrumental suave y motivacional, estilo corporativo minimalista. Iluminación natural cálida, color grading con tonos naturales y acogedores. Montaje elegante y pausado. Duración exacta: 8 segundos, 24 FPS, 1080p, formato horizontal 16:9.`,
       },
     ],
   };
@@ -239,7 +249,7 @@ function generarTextoEnPantalla(
           },
           {
             segundo: "5–8 seg",
-            texto: "APLICA HOY ↗️",
+            texto: "MÁS INFO DESDE NUESTRO PERFIL ↗️",
             estilo:
               "Bold blanco 40px, fondo rojo (#EF4444), centro inferior. Animación: pulso suave.",
           },
@@ -263,7 +273,7 @@ function generarTextoEnPantalla(
           },
           {
             segundo: "5–8 seg",
-            texto: "MÁS INFORMACIÓN EN EL ENLACE ↓",
+            texto: "CONTÁCTANOS POR MENSAJE ↓",
             estilo:
               "Bold blanco 36px, fondo naranja (#F97316), centro inferior. Animación: pulso.",
           },
@@ -333,7 +343,7 @@ function generarTextoEnPantalla(
           },
           {
             segundo: "6–8 seg",
-            texto: "APLICA → LINK EN MI PERFIL",
+            texto: "MÁS DETALLES → NUESTRO PERFIL",
             estilo:
               "Bold blanco 40px, fondo gradiente rojo-naranja, centro inferior. Pulso animado.",
           },
@@ -366,7 +376,7 @@ function generarDescripcionTiktok(
   const temaCapitalizado = tema.charAt(0).toUpperCase() + tema.slice(1);
 
   return {
-    versionA: `🔥 ¡Están buscando ${temaCapitalizado} y las vacantes se llenan rápido! Salario competitivo + horario flexible + sin experiencia 💰 ¡Aplica desde el link en mi perfil! 👆 ¿Conoces a alguien que necesite trabajo? ¡Etiquétalo! 👇
+    versionA: `🔥 ¡Están buscando ${temaCapitalizado} y las vacantes se llenan rápido! Salario competitivo + horario flexible + sin experiencia 💰 ¡Más detalles desde nuestro perfil! 👆 ¿Conoces a alguien que necesite trabajo? ¡Etiquétalo! 👇
 
 #empleo #trabajo #vacantes #${tema.toLowerCase().replace(/\s+/g, "")} #buscotrabajo #empleourgente #contratacioninmediata #trabajoenmexico #vacantesdisponibles #oportunidadlaboral #empleos2024 #trabajosinexperiencia #aplicahoy #recursoshumanos #bolsadetrabajo`,
     versionB: `🔥 ¡VACANTES DE ${temaCapitalizado.toUpperCase()} — CONTRATACIÓN INMEDIATA!
@@ -379,7 +389,7 @@ function generarDescripcionTiktok(
 
 ⚡ ¡Las vacantes se llenan en días! No pierdas esta oportunidad.
 
-👆 Toda la información en el link de mi perfil.
+👆 Toda la información desde nuestro perfil.
 
 ¿Conoces a alguien que esté buscando trabajo? ¡Comparte este video! 🙌
 
@@ -387,7 +397,7 @@ function generarDescripcionTiktok(
     estrategia: `📊 ESTRATEGIA DE PUBLICACIÓN TIKTOK:
 • Horarios óptimos: 7-9 AM, 12-2 PM, 7-9 PM (hora local).
 • Responde TODOS los comentarios en las primeras 2 horas — el algoritmo premia la interacción.
-• Comentario fijado sugerido: "👆 Link en mi perfil para ver todas las vacantes disponibles. ¡Aplica hoy!"
+• Comentario fijado sugerido: "👆 Visita nuestro perfil para más detalles sobre las vacantes disponibles."
 • Usa la función de Dueto/Stitch con otros videos de empleo para ampliar alcance.
 • Publica 2-3 videos por día como mínimo para alimentar el algoritmo.`,
   };
@@ -404,7 +414,7 @@ function generarDescripcionFacebook(
 
 Salario competitivo + horarios flexibles + prestaciones de ley. No se requiere experiencia.
 
-📋 Consulta requisitos y aplica aquí: [ENLACE]
+📋 Envíanos un mensaje para conocer los requisitos completos.
 
 Comparte con quien necesite esta oportunidad 🙌
 
@@ -427,7 +437,7 @@ Comparte con quien necesite esta oportunidad 🙌
 • Oportunidades de crecimiento
 
 📋 ¿Cómo aplicar?
-Toda la información y requisitos completos en el enlace: [ENLACE]
+Envíanos un mensaje directo para recibir toda la información y requisitos completos.
 
 ⚠️ Las vacantes son limitadas. Aplica lo antes posible.
 
@@ -440,7 +450,7 @@ Comparte esta publicación con alguien que esté buscando trabajo 🤝
 • Horarios óptimos: 9-11 AM y 1-3 PM entre semana; domingos 10 AM-12 PM.
 • Comparte en grupos de empleo de la zona (mínimo 5 grupos por publicación).
 • Responde comentarios con información adicional para aumentar alcance orgánico.
-• Usa Facebook Stories para repostear el video con sticker de "Aplica Aquí".
+• Usa Facebook Stories para repostear el video con sticker de "Envíanos Mensaje".
 • Programa publicaciones con Meta Business Suite para consistencia.`,
   };
 }
