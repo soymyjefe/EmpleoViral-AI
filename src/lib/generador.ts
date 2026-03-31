@@ -720,6 +720,12 @@ function generarCumplimiento(_tema: string): SeccionCumplimiento {
       },
       {
         plataforma: "Facebook",
+        regla: "Sin discriminación laboral (género, edad, raza)",
+        cumple: true,
+        nota: "No se especifican restricciones discriminatorias.",
+      },
+      {
+        plataforma: "Facebook",
         regla: "Enlace verificable a landing page",
         cumple: true,
         nota: "Se dirige a sitio propio con AdSense.",
@@ -741,6 +747,12 @@ function generarCumplimiento(_tema: string): SeccionCumplimiento {
       },
       {
         plataforma: "TikTok",
+        regla: "Sin engagement bait (pedir likes/follows por info)",
+        cumple: true,
+        nota: "Los CTAs dirigen al perfil, no piden interacción forzada.",
+      },
+      {
+        plataforma: "TikTok",
         regla: "Urgencia sin manipulación emocional excesiva",
         cumple: true,
         nota: '"Las vacantes se llenan rápido" — urgencia real, no fabricada.',
@@ -749,6 +761,12 @@ function generarCumplimiento(_tema: string): SeccionCumplimiento {
         plataforma: "TikTok",
         regla: "Sin resultados garantizados",
         cumple: true,
+      },
+      {
+        plataforma: "TikTok",
+        regla: "Contenido apto para todas las edades",
+        cumple: true,
+        nota: "Se aclara que las vacantes son para mayores de 18.",
       },
       {
         plataforma: "AdSense",
@@ -773,9 +791,16 @@ function generarCumplimiento(_tema: string): SeccionCumplimiento {
       },
     ],
     alertas: [
-      'Precaución: No mencionar empresas específicas salvo indicación del usuario.',
-      'Usar siempre "salario competitivo" en vez de cifras concretas.',
-      'Incluir disclaimer en Facebook Versión B: "Las vacantes son recopiladas de fuentes públicas."',
+      '🚫 NUNCA menciones empresas específicas ni uses logos reales — riesgo legal y de suspensión.',
+      '🚫 NUNCA inventes cifras de salario — usa siempre "salario competitivo" o "buen sueldo".',
+      '🚫 NUNCA pidas datos personales (CURP, INE, RFC) en publicaciones o comentarios.',
+      '🚫 NUNCA prometas contratación garantizada — presenta como oportunidad, no como hecho.',
+      '🚫 NUNCA uses música con copyright — usa sonidos nativos de la plataforma o libres de derechos.',
+      '⚠️ Siempre incluye disclaimer en Facebook: "Vacantes recopiladas de fuentes públicas de empleo."',
+      '⚠️ No publiques el mismo contenido idéntico en más de 5 grupos de Facebook (detectan spam).',
+      '⚠️ Las imágenes con texto para Facebook deben tener menos del 20% de texto visible.',
+      '⚠️ Varía siempre el contenido entre publicaciones — el contenido repetido reduce alcance.',
+      '💡 Consulta la guía completa en la sección "Políticas" del menú de navegación.',
     ],
   };
 }

@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 const navItems = [
   { href: "/", label: "Inicio", icon: "🏠" },
   { href: "/historial", label: "Historial", icon: "📦" },
+  { href: "/politicas", label: "Políticas", icon: "🛡️" },
 ];
 
 export default function Navbar() {
