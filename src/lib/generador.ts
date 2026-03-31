@@ -12,6 +12,161 @@ import type {
   SeccionFlujoProduccion,
 } from "@/types";
 
+// ─── Utilidad de aleatorización ───
+function elegir<T>(opciones: T[]): T {
+  return opciones[Math.floor(Math.random() * opciones.length)];
+}
+
+function mezclar<T>(arr: T[]): T[] {
+  const copia = [...arr];
+  for (let i = copia.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copia[i], copia[j]] = [copia[j], copia[i]];
+  }
+  return copia;
+}
+
+// ─── Pools de variaciones ───
+const HOOKS = {
+  urgente: [
+    (tema: string) => `¡Atención! Están buscando ${tema} y las vacantes se llenan rápido!`,
+    (tema: string) => `¡Urgente! Necesitan ${tema} de inmediato — quedan pocas vacantes!`,
+    (tema: string) => `¡Ojo! Están contratando ${tema} HOY — no dejes pasar esta oportunidad!`,
+    (tema: string) => `¡Alerta de empleo! Buscan ${tema} con urgencia en tu zona!`,
+    (tema: string) => `¡Esto es para ti! Hay vacantes de ${tema} que se agotan esta semana!`,
+  ],
+  profesional: [
+    (tema: string) => `Si estás buscando empleo como ${tema}, te tenemos buenas noticias.`,
+    (tema: string) => `Hay una oportunidad laboral como ${tema} que podría interesarte.`,
+    (tema: string) => `Se abrieron nuevas vacantes de ${tema} con excelentes condiciones.`,
+    (tema: string) => `¿Buscas trabajo como ${tema}? Mira lo que encontramos para ti.`,
+    (tema: string) => `Nueva oportunidad: están solicitando ${tema} con buenos beneficios.`,
+  ],
+  casual: [
+    (tema: string) => `¡Hey! Están buscando ${tema} y el trabajo se ve bastante bien!`,
+    (tema: string) => `Mira esto: hay chamba de ${tema} disponible cerca de ti!`,
+    (tema: string) => `¡Buenas noticias! Hay trabajo de ${tema} y no piden experiencia!`,
+    (tema: string) => `¿Necesitas trabajo? Están pidiendo ${tema} y suena genial!`,
+    (tema: string) => `Oye, encontré esto: buscan ${tema} y los beneficios están buenos!`,
+  ],
+};
+
+const BENEFICIOS_SETS = [
+  ["Salario competitivo", "Horario flexible", "Sin experiencia requerida"],
+  ["Buen sueldo", "Turnos a tu medida", "Te capacitan desde cero"],
+  ["Pago puntual quincenal", "Horarios que se adaptan a ti", "No piden experiencia"],
+  ["Salario atractivo", "Flexibilidad de horario", "Capacitación incluida"],
+  ["Sueldo competitivo", "Elige tu horario", "Prestaciones desde el día 1"],
+];
+
+const CTAS_TIKTOK = [
+  "Más detalles desde nuestro perfil",
+  "Visita nuestro perfil para toda la info",
+  "Toda la información en nuestro perfil",
+  "Entra a nuestro perfil para más detalles",
+  "Checa nuestro perfil para conocer los requisitos",
+];
+
+const CTAS_FACEBOOK = [
+  "Envíanos un mensaje para más información",
+  "Contáctanos por mensaje directo",
+  "Escríbenos un mensaje para conocer los detalles",
+  "Mándanos un mensaje y te damos toda la info",
+  "Envía un mensaje para recibir los requisitos completos",
+];
+
+const CIERRES_URGENCIA = [
+  "Las vacantes se llenan rápido",
+  "Las plazas son limitadas",
+  "No dejes pasar esta oportunidad",
+  "Quedan pocos lugares disponibles",
+  "Las vacantes se agotan en días",
+];
+
+const THUMBNAIL_TITULOS = [
+  "SE BUSCAN",
+  "VACANTES ABIERTAS",
+  "ESTÁN CONTRATANDO",
+  "HAY TRABAJO",
+  "SE NECESITAN",
+];
+
+const THUMBNAIL_BANNERS = [
+  "VACANTES DISPONIBLES",
+  "CONTRATACIÓN INMEDIATA",
+  "APLICA AHORA",
+  "PLAZAS ABIERTAS",
+  "¡URGENTE!",
+];
+
+const POSTER_TITULOS_PREFIX = [
+  "VACANTE:",
+  "SE SOLICITA:",
+  "OPORTUNIDAD LABORAL:",
+  "EMPLEO DISPONIBLE:",
+  "BUSCAMOS:",
+];
+
+const POSTER_BENEFICIOS = [
+  { icono: "dinero", texto: "Salario Competitivo" },
+  { icono: "dinero", texto: "Buen Sueldo" },
+  { icono: "dinero", texto: "Pago Quincenal Puntual" },
+  { icono: "reloj", texto: "Horario Flexible" },
+  { icono: "reloj", texto: "Turnos Adaptables" },
+  { icono: "reloj", texto: "Elige Tu Horario" },
+  { icono: "ubicación", texto: "Múltiples Ubicaciones" },
+  { icono: "ubicación", texto: "Cerca de Tu Zona" },
+  { icono: "ubicación", texto: "Varios Establecimientos" },
+  { icono: "capacitación", texto: "Capacitación Incluida" },
+  { icono: "capacitación", texto: "Te Capacitan Desde Cero" },
+  { icono: "prestaciones", texto: "Prestaciones de Ley" },
+  { icono: "prestaciones", texto: "Prestaciones Desde el Día 1" },
+];
+
+const POSTER_CTA = [
+  "MÁS INFORMACIÓN",
+  "CONOCE LOS DETALLES",
+  "VER REQUISITOS",
+  "INFÓRMATE AQUÍ",
+  "DESCUBRE MÁS",
+];
+
+const EMOJIS_TITULO = ["🔥", "⚡", "✅", "🚀", "💼", "📢", "🎯", "💰"];
+
+const SUFIJOS = {
+  urgente: [
+    "Vacantes Disponibles HOY",
+    "Contratación Inmediata",
+    "Se Buscan Urgente",
+    "Plazas Abiertas — ¡Aplica Ya!",
+    "Vacantes que Se Agotan Rápido",
+  ],
+  profesional: [
+    "Oportunidad Laboral",
+    "Vacante Disponible",
+    "Nueva Oportunidad",
+    "Posición Abierta",
+    "Oferta de Empleo",
+  ],
+  casual: [
+    "Están Contratando",
+    "Hay Trabajo",
+    "Se Necesita Personal",
+    "Hay Chamba Disponible",
+    "Están Buscando Gente",
+  ],
+};
+
+const HASHTAGS_POOL = [
+  "#empleo", "#trabajo", "#vacantes", "#buscotrabajo", "#empleourgente",
+  "#contratacioninmediata", "#trabajoenmexico", "#vacantesdisponibles",
+  "#oportunidadlaboral", "#empleos2024", "#trabajosinexperiencia",
+  "#recursoshumanos", "#bolsadetrabajo", "#chambadisponible",
+  "#empleodisponible", "#trabajoya", "#buscochamba", "#ofertalaboral",
+  "#empleonuevo", "#contratando",
+];
+
+// ─── Generador principal ───
 export function generarPaqueteCompleto(
   tema: string,
   config: Configuracion
@@ -34,32 +189,15 @@ function generarNombreOferta(
   config: Configuracion
 ): SeccionNombreOferta {
   const temaCapitalizado = tema.charAt(0).toUpperCase() + tema.slice(1);
-  const sufijos = {
-    urgente: [
-      "Vacantes Disponibles HOY",
-      "Contratación Inmediata",
-      "Se Buscan Urgente",
-    ],
-    profesional: [
-      "Oportunidad Laboral",
-      "Vacante Disponible",
-      "Nueva Oportunidad",
-    ],
-    casual: [
-      "Están Contratando",
-      "Hay Trabajo",
-      "Se Necesita Personal",
-    ],
-  };
-
-  const opciones = sufijos[config.tono];
+  const opciones = mezclar(SUFIJOS[config.tono]);
+  const emojis = mezclar(EMOJIS_TITULO);
 
   return {
-    principal: `🔥 ${temaCapitalizado} — ${opciones[0]}!`,
+    principal: `${emojis[0]} ${temaCapitalizado} — ${opciones[0]}!`,
     variantes: [
-      `⚡ ${temaCapitalizado} — ${opciones[1]}!`,
-      `✅ ${temaCapitalizado} — ${opciones[2]}!`,
-      `🚀 ${opciones[0]}: ${temaCapitalizado}!`,
+      `${emojis[1]} ${temaCapitalizado} — ${opciones[1]}!`,
+      `${emojis[2]} ${temaCapitalizado} — ${opciones[2]}!`,
+      `${emojis[3]} ${opciones[3] || opciones[0]}: ${temaCapitalizado}!`,
     ],
   };
 }
@@ -68,6 +206,18 @@ function generarPromptsImagen(
   tema: string,
   _config: Configuracion
 ): SeccionPromptsImagen {
+  const thumbTitulo = elegir(THUMBNAIL_TITULOS);
+  const thumbBanner = elegir(THUMBNAIL_BANNERS);
+  const posterPrefix = elegir(POSTER_TITULOS_PREFIX);
+  const posterCta = elegir(POSTER_CTA);
+
+  // Elegir 3 beneficios de diferentes categorías para el póster
+  const categorias = ["dinero", "reloj", "ubicación"];
+  const beneficiosElegidos = categorias.map((cat) => {
+    const opciones = POSTER_BENEFICIOS.filter((b) => b.icono === cat);
+    return elegir(opciones);
+  });
+
   return {
     prompts: [
       {
@@ -78,12 +228,12 @@ function generarPromptsImagen(
       {
         titulo: "Prompt B — Thumbnail con Texto",
         tipo: "thumbnail",
-        prompt: `Imagen de alto impacto visual en formato vertical 9:16 diseñada como thumbnail viral. Fondo con fotografía de un ambiente de trabajo relacionado con ${tema}, tratada con overlay oscuro semitransparente al 60% para máximo contraste. En el centro superior, texto grande en tipografía bold sans-serif blanca con borde negro que dice "NOW HIRING" en mayúsculas. Debajo, en tipografía ligeramente menor pero igualmente bold, el texto "${tema.toUpperCase()}" en color amarillo brillante (#FFD700). En la parte inferior, un banner rojo con texto blanco "OPEN POSITIONS". Composición centrada, simétrica, diseñada para captar la atención en menos de 1 segundo. Estilo de diseño gráfico para redes sociales, colores vibrantes de alto contraste.`,
+        prompt: `Imagen de alto impacto visual en formato vertical 9:16 diseñada como thumbnail viral. Fondo con fotografía de un ambiente de trabajo relacionado con ${tema}, tratada con overlay oscuro semitransparente al 60% para máximo contraste. En el centro superior, texto grande en tipografía bold sans-serif blanca con borde negro que dice "${thumbTitulo}" en mayúsculas. Debajo, en tipografía ligeramente menor pero igualmente bold, el texto "${tema.toUpperCase()}" en color amarillo brillante (#FFD700). En la parte inferior, un banner rojo con texto blanco "${thumbBanner}". Composición centrada, simétrica, diseñada para captar la atención en menos de 1 segundo. Estilo de diseño gráfico para redes sociales, colores vibrantes de alto contraste.`,
       },
       {
         titulo: "Prompt C — Póster Informativo",
         tipo: "poster",
-        prompt: `Póster informativo profesional en formato vertical 9:16 con fondo de fotografía desenfocada (bokeh) de un ambiente laboral relacionado con ${tema}. Sobre el fondo desenfocado, un panel semitransparente blanco con bordes redondeados ocupa el 70% central de la imagen. En la parte superior del panel, título en tipografía bold negra: "JOB OPENING: ${tema.toUpperCase()}". Debajo del título, tres filas con íconos minimalistas a la izquierda y texto descriptivo en inglés: ícono de dinero + "Competitive Salary", ícono de reloj + "Flexible Schedule", ícono de ubicación + "Multiple Locations". En la parte inferior del panel, botón con fondo naranja vibrante (#F97316) y texto blanco bold: "LEARN MORE". Estilo de diseño limpio y corporativo, tipografía moderna, colores cálidos profesionales.`,
+        prompt: `Póster informativo profesional en formato vertical 9:16 con fondo de fotografía desenfocada (bokeh) de un ambiente laboral relacionado con ${tema}. Sobre el fondo desenfocado, un panel semitransparente blanco con bordes redondeados ocupa el 70% central de la imagen. En la parte superior del panel, título en tipografía bold negra: "${posterPrefix} ${tema.toUpperCase()}". Debajo del título, tres filas con íconos minimalistas a la izquierda y texto descriptivo en español: ícono de ${beneficiosElegidos[0].icono} + "${beneficiosElegidos[0].texto}", ícono de ${beneficiosElegidos[1].icono} + "${beneficiosElegidos[1].texto}", ícono de ${beneficiosElegidos[2].icono} + "${beneficiosElegidos[2].texto}". En la parte inferior del panel, botón con fondo naranja vibrante (#F97316) y texto blanco bold: "${posterCta}". Estilo de diseño limpio y corporativo, tipografía moderna, colores cálidos profesionales.`,
       },
     ],
   };
@@ -94,10 +244,34 @@ function generarScriptsVideo(
   config: Configuracion
 ): SeccionScriptsVideo {
   const temaCapitalizado = tema.charAt(0).toUpperCase() + tema.slice(1);
-  const ctaTiktok = "nuestro perfil para más detalles";
-  const ctaFacebook = "enviarnos un mensaje";
-  const cta =
-    config.plataforma === "facebook" ? ctaFacebook : ctaTiktok;
+  const ctaTiktok = elegir(CTAS_TIKTOK);
+  const ctaFacebook = elegir(CTAS_FACEBOOK);
+  const cta = config.plataforma === "facebook" ? ctaFacebook : ctaTiktok;
+  const hook = elegir(HOOKS[config.tono])(temaCapitalizado);
+  const beneficios = elegir(BENEFICIOS_SETS);
+  const cierre = elegir(CIERRES_URGENCIA);
+
+  const hookExtendido = elegir([
+    `¡Esto te interesa! Varios establecimientos de tu zona están buscando ${temaCapitalizado} con urgencia! Y lo mejor es que no importa si no tienes experiencia, ellos te capacitan desde cero!`,
+    `¡Escucha bien! Hay lugares cerca de ti que necesitan ${temaCapitalizado} ya! Lo mejor de todo es que no necesitas experiencia previa, te enseñan todo desde el primer día!`,
+    `¡No te lo pierdas! Están solicitando ${temaCapitalizado} en varios puntos de tu ciudad! Y lo bueno es que aceptan sin experiencia y te dan capacitación completa!`,
+    `¡Para de scrollear! Hay vacantes de ${temaCapitalizado} abriéndose en tu zona ahora mismo! No piden experiencia y te entrenan desde cero!`,
+    `¡Atención buscadores de empleo! Se necesitan ${temaCapitalizado} urgentemente! La mejor parte: no importa si nunca has trabajado en esto, te preparan completamente!`,
+  ]);
+
+  const beneficiosExtendido = elegir([
+    `Mira los beneficios: ${beneficios[0].toLowerCase()} que se paga puntual cada quincena, ${beneficios[1].toLowerCase()} para que acomodes tu vida personal, y prestaciones desde el primer día!`,
+    `Los beneficios son increíbles: ${beneficios[0].toLowerCase()}, ${beneficios[1].toLowerCase()} que puedes elegir, y todas las prestaciones de ley desde que entras!`,
+    `Te ofrecen: ${beneficios[0].toLowerCase()} con pago seguro, ${beneficios[1].toLowerCase()} para que te organices, y prestaciones completas desde el inicio!`,
+    `Esto es lo que ofrecen: ${beneficios[0].toLowerCase()}, ${beneficios[1].toLowerCase()}, y además prestaciones de ley desde tu primer día de trabajo!`,
+  ]);
+
+  const cierreScript = elegir([
+    `¡No dejes pasar esta oportunidad! ${cierre}. ¡${ctaTiktok}!`,
+    `¡Muévete rápido! ${cierre}. ¡${ctaTiktok}!`,
+    `¡Es ahora o nunca! ${cierre}. ¡${ctaTiktok}!`,
+    `¡Aprovecha antes de que sea tarde! ${cierre}. ¡${ctaTiktok}!`,
+  ]);
 
   return {
     versiones: [
@@ -108,18 +282,18 @@ function generarScriptsVideo(
         lineas: [
           {
             segundo: "0–2 seg",
-            audio: `¡Atención! Están buscando ${temaCapitalizado} y las vacantes se llenan rápido!`,
-            accionPantalla: `Close-up dinámico de persona trabajando como ${tema}. Texto animado: "SE BUSCAN ${tema.toUpperCase()}"`,
+            audio: hook,
+            accionPantalla: `Close-up dinámico de persona trabajando como ${tema}. Texto animado: "${elegir(THUMBNAIL_TITULOS)} ${tema.toUpperCase()}"`,
           },
           {
             segundo: "2–5 seg",
-            audio: `Salario competitivo, horario flexible y no necesitas experiencia previa!`,
-            accionPantalla: `Transición a plano medio del ambiente laboral. Aparecen 3 íconos de beneficios con texto: salario, horario, sin experiencia.`,
+            audio: `${beneficios[0]}, ${beneficios[1].toLowerCase()} y ${beneficios[2].toLowerCase()}!`,
+            accionPantalla: `Transición a plano medio del ambiente laboral. Aparecen 3 íconos de beneficios con texto: ${beneficios[0].toLowerCase()}, ${beneficios[1].toLowerCase()}, ${beneficios[2].toLowerCase()}.`,
           },
           {
             segundo: "5–8 seg",
-            audio: `¡Encuentra toda la info desde ${cta}! Las vacantes no esperan!`,
-            accionPantalla: `Zoom out revelando el espacio completo. Banner CTA parpadeante: "MÁS INFO EN NUESTRO PERFIL" con flecha animada.`,
+            audio: `¡${cta}! ${cierre}!`,
+            accionPantalla: `Zoom out revelando el espacio completo. Banner CTA parpadeante: "${ctaTiktok.toUpperCase()}" con flecha animada.`,
           },
         ],
       },
@@ -130,18 +304,18 @@ function generarScriptsVideo(
         lineas: [
           {
             segundo: "Escena 1: 0–8 seg",
-            audio: `¡Esto te interesa! Varios establecimientos de tu zona están buscando ${temaCapitalizado} con urgencia! Y lo mejor es que no importa si no tienes experiencia, ellos te capacitan desde cero!`,
-            accionPantalla: `Dolly forward hacia persona latina preparándose para trabajar. Texto grande: "URGENTE: SE BUSCAN ${tema.toUpperCase()}". Transición a plano medio mostrando el ambiente de trabajo real.`,
+            audio: hookExtendido,
+            accionPantalla: `Dolly forward hacia persona latina preparándose para trabajar. Texto grande: "URGENTE: ${elegir(THUMBNAIL_TITULOS)} ${tema.toUpperCase()}". Transición a plano medio mostrando el ambiente de trabajo real.`,
           },
           {
             segundo: "Escena 2: 8–16 seg",
-            audio: `Mira los beneficios: salario competitivo que se paga puntual cada quincena, horarios flexibles para que acomodes tu vida personal, y prestaciones desde el primer día!`,
-            accionPantalla: `Slow pan lateral por el espacio de trabajo. Aparecen 3 cards animadas: "Salario Competitivo", "Horarios Flexibles", "Prestaciones de Ley". Cada card entra con slide-up.`,
+            audio: beneficiosExtendido,
+            accionPantalla: `Slow pan lateral por el espacio de trabajo. Aparecen 3 cards animadas: "${beneficios[0]}", "${beneficios[1]}", "Prestaciones de Ley". Cada card entra con slide-up.`,
           },
           {
             segundo: "Escena 3: 16–24 seg",
-            audio: `¡No dejes pasar esta oportunidad! Las vacantes de ${temaCapitalizado} se llenan en días. Visita ${cta} para más información!`,
-            accionPantalla: `Close-up de persona sonriendo satisfecha en su trabajo. Banner final: "MÁS DETALLES DESDE NUESTRO PERFIL" con animación de pulso. Logo y URL.`,
+            audio: cierreScript,
+            accionPantalla: `Close-up de persona sonriendo satisfecha en su trabajo. Banner final: "${ctaTiktok.toUpperCase()}" con animación de pulso. Logo y URL.`,
           },
         ],
       },
@@ -154,64 +328,98 @@ function generarPromptsVideo(
   _config: Configuracion
 ): SeccionPromptsVideo {
   const temaCapitalizado = tema.charAt(0).toUpperCase() + tema.slice(1);
+  const hookTk = elegir(HOOKS.urgente)(temaCapitalizado);
+  const beneficios = elegir(BENEFICIOS_SETS);
+  const ctaTk = elegir(CTAS_TIKTOK);
+  const ctaFb = elegir(CTAS_FACEBOOK);
+  const cierre = elegir(CIERRES_URGENCIA);
+
+  const edadTk = elegir([25, 26, 27, 28, 29, 30]);
+  const edadFb = elegir([28, 29, 30, 31, 32, 33]);
+  const cabelloTk = elegir(["cabello oscuro corto", "cabello negro ondulado", "cabello castaño corto"]);
+  const cabelloFb = elegir(["cabello recogido", "cabello oscuro en coleta", "cabello castaño recogido"]);
+  const movCamaraTk = elegir(["Dolly forward cinematográfico", "Push-in suave cinematográfico", "Steadicam avanzando"]);
+  const movCamaraFb = elegir(["Tracking shot lateral cinematográfico", "Slow dolly lateral", "Steadicam lateral suave"]);
+  const musicaTk = elegir(["beat urbano rítmico", "beat latino energético", "ritmo trap suave", "beat lo-fi dinámico"]);
+  const musicaFb = elegir(["instrumental corporativo suave y motivacional", "piano ambiental inspirador", "instrumental acústico cálido", "música corporativa minimalista"]);
 
   return {
     prompts: [
       {
         titulo: "Versión A — TikTok (9:16)",
         plataforma: "TikTok",
-        prompt: `Dolly forward cinematográfico hacia una persona latina de 28 años, piel morena, cabello oscuro corto, vistiendo uniforme profesional limpio de ${tema}, que se prepara con determinación en su estación de trabajo. El escenario es un establecimiento real de ${tema} con iluminación cálida golden hour, equipos y herramientas del oficio visibles al fondo con bokeh suave. La cámara avanza suavemente mientras la persona realiza sus tareas con profesionalismo. Voiceover masculino joven en español latinoamericano, tono urgente y entusiasta: "¡Atención! Están buscando ${temaCapitalizado} y las vacantes se llenan rápido! Salario competitivo, horario flexible y no necesitas experiencia previa! ¡Más detalles desde nuestro perfil!" Audio ambiental sutil del entorno laboral de ${tema}. Música de fondo: beat urbano rítmico a volumen bajo. Color grading cálido cinematográfico con tonos dorados. Duración exacta: 8 segundos, 24 FPS, 1080p, formato vertical 9:16.`,
+        prompt: `${movCamaraTk} hacia una persona latina de ${edadTk} años, piel morena, ${cabelloTk}, vistiendo uniforme profesional limpio de ${tema}, que se prepara con determinación en su estación de trabajo. El escenario es un establecimiento real de ${tema} con iluminación cálida golden hour, equipos y herramientas del oficio visibles al fondo con bokeh suave. La cámara avanza suavemente mientras la persona realiza sus tareas con profesionalismo. Voiceover masculino joven en español latinoamericano, tono urgente y entusiasta: "${hookTk} ${beneficios[0]}, ${beneficios[1].toLowerCase()} y ${beneficios[2].toLowerCase()}! ¡${ctaTk}!" Audio ambiental sutil del entorno laboral de ${tema}. Música de fondo: ${musicaTk} a volumen bajo. Color grading cálido cinematográfico con tonos dorados. Duración exacta: 8 segundos, 24 FPS, 1080p, formato vertical 9:16.`,
       },
       {
         titulo: "Versión A — Facebook (16:9)",
         plataforma: "Facebook",
-        prompt: `Tracking shot lateral cinematográfico por un establecimiento de ${tema}, mostrando a una persona latina de 30 años, cabello recogido, uniforme profesional impecable, realizando sus labores con confianza y sonrisa sutil. El espacio está iluminado con luz cálida natural, ambiente profesional y acogedor. La cámara se desplaza suavemente revelando el entorno laboral completo. Voiceover femenino profesional en español latinoamericano, tono cálido y confiable: "¿Buscas empleo como ${temaCapitalizado}? Hay vacantes disponibles con salario competitivo y horarios flexibles. Envíanos un mensaje para más información." Audio ambiental del entorno de trabajo. Música de fondo: instrumental corporativo suave y motivacional. Color grading cálido con tonos naturales. Duración exacta: 8 segundos, 24 FPS, 1080p, formato horizontal 16:9.`,
+        prompt: `${movCamaraFb} por un establecimiento de ${tema}, mostrando a una persona latina de ${edadFb} años, ${cabelloFb}, uniforme profesional impecable, realizando sus labores con confianza y sonrisa sutil. El espacio está iluminado con luz cálida natural, ambiente profesional y acogedor. La cámara se desplaza suavemente revelando el entorno laboral completo. Voiceover femenino profesional en español latinoamericano, tono cálido y confiable: "¿Buscas empleo como ${temaCapitalizado}? Hay vacantes disponibles con ${beneficios[0].toLowerCase()} y ${beneficios[1].toLowerCase()}. ${ctaFb}." Audio ambiental del entorno de trabajo. Música de fondo: ${musicaFb}. Color grading cálido con tonos naturales. Duración exacta: 8 segundos, 24 FPS, 1080p, formato horizontal 16:9.`,
       },
       {
         titulo: "Versión B — Escena 1 TikTok (9:16)",
         plataforma: "TikTok",
         escena: 1,
-        prompt: `Close-up dramático con transición a plano medio de una persona latina de 28 años, piel morena, cabello oscuro, uniforme de ${tema}, que levanta la vista hacia la cámara con expresión decidida mientras se prepara en su estación de trabajo. El establecimiento tiene iluminación golden hour cálida, herramientas y equipos del oficio visibles. Dolly back lento revelando el espacio completo. Voiceover masculino joven urgente en español latinoamericano: "¡Esto te interesa! Varios establecimientos de tu zona están buscando ${temaCapitalizado} con urgencia! Y lo mejor es que no importa si no tienes experiencia, ellos te capacitan desde cero!" Sonido ambiental del entorno laboral. Beat urbano energético de fondo. Color grading dorado cinematográfico. 8 segundos, 24 FPS, 1080p, 9:16.`,
+        prompt: `Close-up dramático con transición a plano medio de una persona latina de ${edadTk} años, piel morena, ${cabelloTk}, uniforme de ${tema}, que levanta la vista hacia la cámara con expresión decidida mientras se prepara en su estación de trabajo. El establecimiento tiene iluminación golden hour cálida, herramientas y equipos del oficio visibles. Dolly back lento revelando el espacio completo. Voiceover masculino joven urgente en español latinoamericano: "${elegir([
+          `¡Esto te interesa! Varios establecimientos de tu zona están buscando ${temaCapitalizado} con urgencia! Y lo mejor es que no importa si no tienes experiencia, ellos te capacitan desde cero!`,
+          `¡Para de scrollear! Necesitan ${temaCapitalizado} en tu zona y las vacantes no van a durar! Lo mejor: aceptan sin experiencia y te entrenan!`,
+          `¡Escucha bien! Hay lugares buscando ${temaCapitalizado} ahora mismo! No piden experiencia, te capacitan completamente desde el día uno!`,
+        ])}" Sonido ambiental del entorno laboral. Beat urbano energético de fondo. Color grading dorado cinematográfico. 8 segundos, 24 FPS, 1080p, 9:16.`,
       },
       {
         titulo: "Versión B — Escena 2 TikTok (9:16)",
         plataforma: "TikTok",
         escena: 2,
-        prompt: `Slow pan lateral cinematográfico por el interior de un establecimiento de ${tema}, mismo sujeto latino de 28 años del plano anterior (misma ropa, mismo cabello oscuro corto) ahora realizando sus tareas con fluidez y profesionalismo. La cámara revela diferentes áreas del espacio de trabajo mientras la persona interactúa con su entorno. Iluminación cálida constante. Voiceover masculino joven entusiasta: "Mira los beneficios: salario competitivo que se paga puntual cada quincena, horarios flexibles para que acomodes tu vida personal, y prestaciones desde el primer día!" Sonido ambiental del trabajo. Beat urbano rítmico. Color grading cálido. 8 segundos, 24 FPS, 1080p, 9:16.`,
+        prompt: `Slow pan lateral cinematográfico por el interior de un establecimiento de ${tema}, mismo sujeto latino de ${edadTk} años del plano anterior (misma ropa, mismo ${cabelloTk}) ahora realizando sus tareas con fluidez y profesionalismo. La cámara revela diferentes áreas del espacio de trabajo mientras la persona interactúa con su entorno. Iluminación cálida constante. Voiceover masculino joven entusiasta: "${elegir([
+          `Mira los beneficios: ${beneficios[0].toLowerCase()} que se paga puntual cada quincena, ${beneficios[1].toLowerCase()} para que acomodes tu vida personal, y prestaciones desde el primer día!`,
+          `Los beneficios son geniales: ${beneficios[0].toLowerCase()}, ${beneficios[1].toLowerCase()}, y prestaciones de ley completas desde que empiezas!`,
+          `Te ofrecen: ${beneficios[0].toLowerCase()} con pago seguro, ${beneficios[1].toLowerCase()}, y todas las prestaciones desde el día uno!`,
+        ])}" Sonido ambiental del trabajo. ${elegir(["Beat urbano rítmico", "Beat latino suave", "Ritmo lo-fi dinámico"])}. Color grading cálido. 8 segundos, 24 FPS, 1080p, 9:16.`,
       },
       {
         titulo: "Versión B — Escena 3 TikTok (9:16)",
         plataforma: "TikTok",
         escena: 3,
-        prompt: `Medium close-up del mismo sujeto latino de 28 años (misma ropa, mismo look) sonriendo con satisfacción al completar una tarea como ${tema}. La cámara se acerca suavemente en un push-in emocional. Iluminación cálida golden hour envolvente. El sujeto mira brevemente a cámara con expresión invitadora. Voiceover masculino joven con urgencia de cierre: "¡No dejes pasar esta oportunidad! Las vacantes de ${temaCapitalizado} se llenan en días. Visita nuestro perfil para más detalles!" Sonido ambiental suave. Beat urbano con crescendo final. Color grading dorado. 8 segundos, 24 FPS, 1080p, 9:16.`,
+        prompt: `Medium close-up del mismo sujeto latino de ${edadTk} años (misma ropa, mismo look) sonriendo con satisfacción al completar una tarea como ${tema}. La cámara se acerca suavemente en un push-in emocional. Iluminación cálida golden hour envolvente. El sujeto mira brevemente a cámara con expresión invitadora. Voiceover masculino joven con urgencia de cierre: "¡${elegir(["No dejes pasar esta oportunidad", "Muévete rápido", "Aprovecha ahora", "Es tu momento"])}! ${cierre}. ¡${ctaTk}!" Sonido ambiental suave. Beat urbano con crescendo final. Color grading dorado. 8 segundos, 24 FPS, 1080p, 9:16.`,
       },
       {
         titulo: "Versión B — Escena 1 Facebook (16:9)",
         plataforma: "Facebook",
         escena: 1,
-        prompt: `Wide establishing shot de un establecimiento de ${tema}, con iluminación natural cálida. Una persona latina de 30 años, cabello recogido, uniforme profesional, entra al encuadre y se ubica en su estación de trabajo con confianza. La cámara realiza un slow zoom-in suave. Voiceover femenino profesional en español latinoamericano: "Si estás buscando una oportunidad laboral como ${temaCapitalizado}, te tenemos buenas noticias. Hay establecimientos en tu zona con vacantes disponibles y no requieren experiencia previa." Sonido ambiental del entorno. Música instrumental corporativa motivacional. Color grading cálido natural. 8 segundos, 24 FPS, 1080p, 16:9.`,
+        prompt: `Wide establishing shot de un establecimiento de ${tema}, con iluminación natural cálida. Una persona latina de ${edadFb} años, ${cabelloFb}, uniforme profesional, entra al encuadre y se ubica en su estación de trabajo con confianza. La cámara realiza un slow zoom-in suave. Voiceover femenino profesional en español latinoamericano: "${elegir([
+          `Si estás buscando una oportunidad laboral como ${temaCapitalizado}, te tenemos buenas noticias. Hay establecimientos en tu zona con vacantes disponibles y no requieren experiencia previa.`,
+          `Hay buenas noticias si buscas empleo como ${temaCapitalizado}. Varios lugares de tu zona están contratando y no necesitas experiencia para aplicar.`,
+          `¿Te interesa trabajar como ${temaCapitalizado}? Se abrieron vacantes en tu zona con excelentes condiciones y sin requisito de experiencia.`,
+        ])}" Sonido ambiental del entorno. ${elegir(["Música instrumental corporativa motivacional", "Piano ambiental inspirador", "Instrumental acústico cálido"])}. Color grading cálido natural. 8 segundos, 24 FPS, 1080p, 16:9.`,
       },
       {
         titulo: "Versión B — Escena 2 Facebook (16:9)",
         plataforma: "Facebook",
         escena: 2,
-        prompt: `Tracking shot a nivel de hombro siguiendo a la misma persona latina de 30 años (mismo uniforme, cabello recogido) mientras trabaja en sus tareas como ${tema}. El espacio es amplio, bien iluminado con luz cálida, ambiente profesional. La cámara captura la dinámica del trabajo. Voiceover femenino profesional: "Los beneficios incluyen salario competitivo con pago quincenal puntual, horarios flexibles que se adaptan a tu disponibilidad, y prestaciones de ley desde tu primer día de trabajo." Audio ambiental suave. Instrumental corporativo continuo. Color grading cálido. 8 segundos, 24 FPS, 1080p, 16:9.`,
+        prompt: `Tracking shot a nivel de hombro siguiendo a la misma persona latina de ${edadFb} años (mismo uniforme, ${cabelloFb}) mientras trabaja en sus tareas como ${tema}. El espacio es amplio, bien iluminado con luz cálida, ambiente profesional. La cámara captura la dinámica del trabajo. Voiceover femenino profesional: "${elegir([
+          `Los beneficios incluyen ${beneficios[0].toLowerCase()} con pago quincenal puntual, ${beneficios[1].toLowerCase()} que se adaptan a tu disponibilidad, y prestaciones de ley desde tu primer día de trabajo.`,
+          `Te ofrecen ${beneficios[0].toLowerCase()}, ${beneficios[1].toLowerCase()} para que organices tu tiempo, y prestaciones completas desde el inicio.`,
+          `Entre los beneficios están: ${beneficios[0].toLowerCase()} garantizado, ${beneficios[1].toLowerCase()}, y todas las prestaciones de ley desde que comienzas.`,
+        ])}" Audio ambiental suave. Instrumental corporativo continuo. Color grading cálido. 8 segundos, 24 FPS, 1080p, 16:9.`,
       },
       {
         titulo: "Versión B — Escena 3 Facebook (16:9)",
         plataforma: "Facebook",
         escena: 3,
-        prompt: `Medium shot de la misma persona latina de 30 años (continuidad: mismo uniforme, cabello recogido) terminando su jornada con satisfacción, organizando su espacio de trabajo de ${tema} con una sonrisa genuina. La cámara realiza un slow pull-back elegante revelando el establecimiento completo. Voiceover femenino profesional con tono de cierre: "No dejes pasar esta oportunidad. Contáctanos por mensaje para conocer todos los detalles. Las vacantes son limitadas." Audio ambiental. Instrumental corporativo con resolución suave. Color grading cálido. 8 segundos, 24 FPS, 1080p, 16:9.`,
+        prompt: `Medium shot de la misma persona latina de ${edadFb} años (continuidad: mismo uniforme, ${cabelloFb}) terminando su jornada con satisfacción, organizando su espacio de trabajo de ${tema} con una sonrisa genuina. La cámara realiza un slow pull-back elegante revelando el establecimiento completo. Voiceover femenino profesional con tono de cierre: "${elegir([
+          `No dejes pasar esta oportunidad. ${ctaFb}. ${cierre}.`,
+          `Esta oportunidad no va a durar mucho. ${ctaFb}. ${cierre}.`,
+          `Si te interesa, actúa rápido. ${ctaFb}. ${cierre}.`,
+        ])}" Audio ambiental. Instrumental corporativo con resolución suave. Color grading cálido. 8 segundos, 24 FPS, 1080p, 16:9.`,
       },
       {
         titulo: "Versión C — Narrativo TikTok (9:16) — Sin Diálogo",
         plataforma: "TikTok",
-        prompt: `Secuencia cinematográfica puramente visual sin diálogos ni voiceover. Una persona latina de 28 años, piel morena, cabello oscuro corto, uniforme profesional de ${tema}, realiza sus tareas laborales con destreza y concentración. La cámara alterna entre: close-up de las manos trabajando, plano medio del sujeto en acción, y wide shot del establecimiento completo. Los personajes NO hablan ni miran a cámara en ningún momento — todo es observacional, estilo documental. Sin voiceover. Audio únicamente ambiental: sonidos reales del entorno de trabajo de ${tema} (utensilios, máquinas, ambiente). Música de fondo: beat lo-fi relajado y rítmico que transmite rutina y satisfacción laboral. Iluminación golden hour cálida, color grading cinematográfico dorado. Montaje fluido con transiciones suaves. Duración exacta: 8 segundos, 24 FPS, 1080p, formato vertical 9:16.`,
+        prompt: `Secuencia cinematográfica puramente visual sin diálogos ni voiceover. Una persona latina de ${edadTk} años, piel morena, ${cabelloTk}, uniforme profesional de ${tema}, realiza sus tareas laborales con destreza y concentración. La cámara alterna entre: close-up de las manos trabajando, plano medio del sujeto en acción, y wide shot del establecimiento completo. Los personajes NO hablan ni miran a cámara en ningún momento — todo es observacional, estilo documental. Sin voiceover. Audio únicamente ambiental: sonidos reales del entorno de trabajo de ${tema} (utensilios, máquinas, ambiente). Música de fondo: ${elegir(["beat lo-fi relajado y rítmico", "beat chill hop suave", "melodía lo-fi ambiental", "ritmo lo-fi instrumental"])} que transmite rutina y satisfacción laboral. Iluminación golden hour cálida, color grading cinematográfico dorado. Montaje fluido con transiciones suaves. Duración exacta: 8 segundos, 24 FPS, 1080p, formato vertical 9:16.`,
       },
       {
         titulo: "Versión C — Narrativo Facebook (16:9) — Sin Diálogo",
         plataforma: "Facebook",
-        prompt: `Secuencia cinematográfica puramente visual sin diálogos ni voiceover. Una persona latina de 30 años, cabello recogido, uniforme profesional impecable de ${tema}, realiza su jornada laboral con profesionalismo y calma. La cámara fluye como documental observacional: tracking shot siguiendo al sujeto mientras trabaja, insert shots de detalles del oficio, plano general del espacio laboral. Los personajes NO hablan ni interactúan con la cámara — todo es natural y espontáneo. Sin voiceover. Audio únicamente ambiental: sonidos auténticos del entorno de trabajo de ${tema}. Música de fondo: instrumental suave y motivacional, estilo corporativo minimalista. Iluminación natural cálida, color grading con tonos naturales y acogedores. Montaje elegante y pausado. Duración exacta: 8 segundos, 24 FPS, 1080p, formato horizontal 16:9.`,
+        prompt: `Secuencia cinematográfica puramente visual sin diálogos ni voiceover. Una persona latina de ${edadFb} años, ${cabelloFb}, uniforme profesional impecable de ${tema}, realiza su jornada laboral con profesionalismo y calma. La cámara fluye como documental observacional: tracking shot siguiendo al sujeto mientras trabaja, insert shots de detalles del oficio, plano general del espacio laboral. Los personajes NO hablan ni interactúan con la cámara — todo es natural y espontáneo. Sin voiceover. Audio únicamente ambiental: sonidos auténticos del entorno de trabajo de ${tema}. Música de fondo: ${elegir(["instrumental suave y motivacional, estilo corporativo minimalista", "piano ambiental con cuerdas suaves", "instrumental acústico sereno y profesional", "melodía corporativa cálida y elegante"])}. Iluminación natural cálida, color grading con tonos naturales y acogedores. Montaje elegante y pausado. Duración exacta: 8 segundos, 24 FPS, 1080p, formato horizontal 16:9.`,
       },
     ],
   };
@@ -222,6 +430,10 @@ function generarTextoEnPantalla(
   _config: Configuracion
 ): SeccionTextoEnPantalla {
   const temaUpper = tema.toUpperCase();
+  const tituloThumb = elegir(THUMBNAIL_TITULOS);
+  const ctaTkTexto = elegir(["MÁS INFO DESDE NUESTRO PERFIL ↗️", "DETALLES EN NUESTRO PERFIL ↗️", "VISITA NUESTRO PERFIL ↗️", "TODA LA INFO EN NUESTRO PERFIL ↗️"]);
+  const ctaFbTexto = elegir(["CONTÁCTANOS POR MENSAJE ↓", "ENVÍANOS UN MENSAJE ↓", "ESCRÍBENOS POR MENSAJE ↓", "MÁNDANOS UN MENSAJE ↓"]);
+  const beneficios = elegir(BENEFICIOS_SETS);
 
   return {
     tablas: [
@@ -231,25 +443,25 @@ function generarTextoEnPantalla(
         lineas: [
           {
             segundo: "0–2 seg",
-            texto: `SE BUSCAN ${temaUpper}`,
+            texto: `${tituloThumb} ${temaUpper}`,
             estilo:
               "Bold blanco 48px, sombra negra, centro superior. Animación: scale-in rápido.",
           },
           {
             segundo: "2–4 seg",
-            texto: "💰 Salario competitivo\n⏰ Horario flexible",
+            texto: `💰 ${beneficios[0]}\n⏰ ${beneficios[1]}`,
             estilo:
               "Blanco 32px, izquierda centro. Animación: slide-up secuencial.",
           },
           {
             segundo: "4–5 seg",
-            texto: "📋 Sin experiencia previa",
+            texto: `📋 ${beneficios[2]}`,
             estilo:
               "Blanco 32px, izquierda centro. Animación: slide-up.",
           },
           {
             segundo: "5–8 seg",
-            texto: "MÁS INFO DESDE NUESTRO PERFIL ↗️",
+            texto: ctaTkTexto,
             estilo:
               "Bold blanco 40px, fondo rojo (#EF4444), centro inferior. Animación: pulso suave.",
           },
@@ -267,13 +479,13 @@ function generarTextoEnPantalla(
           },
           {
             segundo: "2–5 seg",
-            texto: "✓ Salario competitivo  ✓ Horario flexible  ✓ Prestaciones",
+            texto: `✓ ${beneficios[0]}  ✓ ${beneficios[1]}  ✓ Prestaciones`,
             estilo:
               "Blanco 28px, centro medio. Animación: typewriter.",
           },
           {
             segundo: "5–8 seg",
-            texto: "CONTÁCTANOS POR MENSAJE ↓",
+            texto: ctaFbTexto,
             estilo:
               "Bold blanco 36px, fondo naranja (#F97316), centro inferior. Animación: pulso.",
           },
@@ -291,13 +503,13 @@ function generarTextoEnPantalla(
           },
           {
             segundo: "3–6 seg",
-            texto: "Están contratando en tu zona",
+            texto: elegir(["Están contratando en tu zona", "Hay vacantes cerca de ti", "Están buscando gente en tu zona", "Contratación abierta en tu ciudad"]),
             estilo:
               "Blanco 32px, centro. Animación: fade-in.",
           },
           {
             segundo: "6–8 seg",
-            texto: "¡SIN EXPERIENCIA! Te capacitan",
+            texto: elegir(["¡SIN EXPERIENCIA! Te capacitan", "¡No piden experiencia! Te entrenan", "¡Aceptan sin experiencia!", "¡Te capacitan desde cero!"]),
             estilo:
               "Bold amarillo (#FFD700) 36px, centro. Animación: bounce.",
           },
@@ -309,19 +521,19 @@ function generarTextoEnPantalla(
         lineas: [
           {
             segundo: "0–3 seg",
-            texto: "💰 Salario competitivo\npago quincenal",
+            texto: `💰 ${beneficios[0]}\npago quincenal`,
             estilo:
               "Blanco 32px, izquierda. Card con fondo semi-transparente. Slide-in izquierda.",
           },
           {
             segundo: "3–5 seg",
-            texto: "⏰ Horarios flexibles",
+            texto: `⏰ ${beneficios[1]}`,
             estilo:
               "Blanco 32px, centro. Card con fondo semi-transparente. Slide-in derecha.",
           },
           {
             segundo: "5–8 seg",
-            texto: "📋 Prestaciones desde día 1",
+            texto: elegir(["📋 Prestaciones desde día 1", "📋 Prestaciones de ley completas", "📋 Beneficios desde el inicio"]),
             estilo:
               "Blanco 32px, derecha. Card con fondo semi-transparente. Slide-up.",
           },
@@ -333,17 +545,17 @@ function generarTextoEnPantalla(
         lineas: [
           {
             segundo: "0–3 seg",
-            texto: "¡No dejes pasar esta oportunidad!",
+            texto: elegir(["¡No dejes pasar esta oportunidad!", "¡Aprovecha ahora!", "¡Es tu momento!", "¡Muévete rápido!"]),
             estilo: "Bold blanco 36px, centro. Fade-in.",
           },
           {
             segundo: "3–6 seg",
-            texto: "Las vacantes se llenan rápido",
+            texto: elegir(["Las vacantes se llenan rápido", "Quedan pocos lugares", "Las plazas son limitadas", "Las vacantes se agotan pronto"]),
             estilo: "Blanco 28px con fondo rojo, centro. Slide-up.",
           },
           {
             segundo: "6–8 seg",
-            texto: "MÁS DETALLES → NUESTRO PERFIL",
+            texto: elegir(["MÁS DETALLES → NUESTRO PERFIL", "INFO COMPLETA → NUESTRO PERFIL", "VER MÁS → NUESTRO PERFIL", "TODA LA INFO → NUESTRO PERFIL"]),
             estilo:
               "Bold blanco 40px, fondo gradiente rojo-naranja, centro inferior. Pulso animado.",
           },
@@ -355,12 +567,16 @@ function generarTextoEnPantalla(
         lineas: [
           {
             segundo: "0–3 seg",
-            texto: `OPORTUNIDAD LABORAL\n${temaUpper}`,
+            texto: `${elegir(["OPORTUNIDAD LABORAL", "VACANTE DISPONIBLE", "EMPLEO DISPONIBLE"])}\n${temaUpper}`,
             estilo: "Bold blanco 40px, sombra, centro superior. Fade-in elegante.",
           },
           {
             segundo: "3–8 seg",
-            texto: "Vacantes disponibles en tu zona\nSin experiencia requerida",
+            texto: elegir([
+              "Vacantes disponibles en tu zona\nSin experiencia requerida",
+              "Están contratando cerca de ti\nNo necesitas experiencia",
+              "Hay plazas abiertas en tu ciudad\nCapacitación incluida",
+            ]),
             estilo: "Blanco 28px, centro. Animación suave fade.",
           },
         ],
@@ -374,30 +590,41 @@ function generarDescripcionTiktok(
   _config: Configuracion
 ): SeccionDescripcionTiktok {
   const temaCapitalizado = tema.charAt(0).toUpperCase() + tema.slice(1);
+  const temaHash = tema.toLowerCase().replace(/\s+/g, "");
+  const ctaTk = elegir(CTAS_TIKTOK);
+  const beneficios = elegir(BENEFICIOS_SETS);
+  const cierre = elegir(CIERRES_URGENCIA);
+
+  // Elegir hashtags aleatorios (10 del pool + el del tema)
+  const hashtagsTema = `#${temaHash}`;
+  const hashtagsAleatorios = mezclar(HASHTAGS_POOL).slice(0, 12);
+  const hashtags = [hashtagsTema, ...hashtagsAleatorios].join(" ");
+
+  const hookCorto = elegir(HOOKS.urgente)(temaCapitalizado);
 
   return {
-    versionA: `🔥 ¡Están buscando ${temaCapitalizado} y las vacantes se llenan rápido! Salario competitivo + horario flexible + sin experiencia 💰 ¡Más detalles desde nuestro perfil! 👆 ¿Conoces a alguien que necesite trabajo? ¡Etiquétalo! 👇
+    versionA: `🔥 ${hookCorto} ${beneficios[0]} + ${beneficios[1].toLowerCase()} + ${beneficios[2].toLowerCase()} 💰 ¡${ctaTk}! 👆 ¿Conoces a alguien que necesite trabajo? ¡Etiquétalo! 👇
 
-#empleo #trabajo #vacantes #${tema.toLowerCase().replace(/\s+/g, "")} #buscotrabajo #empleourgente #contratacioninmediata #trabajoenmexico #vacantesdisponibles #oportunidadlaboral #empleos2024 #trabajosinexperiencia #aplicahoy #recursoshumanos #bolsadetrabajo`,
+${hashtags}`,
     versionB: `🔥 ¡VACANTES DE ${temaCapitalizado.toUpperCase()} — CONTRATACIÓN INMEDIATA!
 
-✅ Salario competitivo con pago quincenal
-✅ Horarios flexibles
+✅ ${beneficios[0]} con pago quincenal
+✅ ${beneficios[1]}
 ✅ Prestaciones de ley desde el día 1
-✅ No se requiere experiencia previa
+✅ ${beneficios[2]}
 ✅ Capacitación incluida
 
-⚡ ¡Las vacantes se llenan en días! No pierdas esta oportunidad.
+⚡ ¡${cierre}! No pierdas esta oportunidad.
 
-👆 Toda la información desde nuestro perfil.
+👆 ${ctaTk}.
 
 ¿Conoces a alguien que esté buscando trabajo? ¡Comparte este video! 🙌
 
-#empleo #trabajo #vacantes #${tema.toLowerCase().replace(/\s+/g, "")} #buscotrabajo #empleourgente #contratacioninmediata #trabajoenmexico #vacantesdisponibles #oportunidadlaboral #empleos2024 #trabajosinexperiencia #aplicahoy #recursoshumanos #bolsadetrabajo`,
+${hashtags}`,
     estrategia: `📊 ESTRATEGIA DE PUBLICACIÓN TIKTOK:
-• Horarios óptimos: 7-9 AM, 12-2 PM, 7-9 PM (hora local).
+• Horarios óptimos: ${elegir(["7-9 AM, 12-2 PM, 7-9 PM", "6-8 AM, 11-1 PM, 8-10 PM", "7-9 AM, 1-3 PM, 6-8 PM"])} (hora local).
 • Responde TODOS los comentarios en las primeras 2 horas — el algoritmo premia la interacción.
-• Comentario fijado sugerido: "👆 Visita nuestro perfil para más detalles sobre las vacantes disponibles."
+• Comentario fijado sugerido: "👆 ${ctaTk}."
 • Usa la función de Dueto/Stitch con otros videos de empleo para ampliar alcance.
 • Publica 2-3 videos por día como mínimo para alimentar el algoritmo.`,
   };
@@ -408,17 +635,23 @@ function generarDescripcionFacebook(
   _config: Configuracion
 ): SeccionDescripcionFacebook {
   const temaCapitalizado = tema.charAt(0).toUpperCase() + tema.slice(1);
+  const temaHash = temaCapitalizado.replace(/\s+/g, "");
+  const ctaFb = elegir(CTAS_FACEBOOK);
+  const beneficios = elegir(BENEFICIOS_SETS);
+  const cierre = elegir(CIERRES_URGENCIA);
+
+  const hashtagsFb = `#Empleo #Trabajo #${temaHash} #Vacantes #OportunidadLaboral #BolsaDeTrabajo #ContrataciónInmediata #TrabajoEnMéxico`;
 
   return {
     versionA: `🔥 ¡Vacantes disponibles para ${temaCapitalizado}!
 
-Salario competitivo + horarios flexibles + prestaciones de ley. No se requiere experiencia.
+${beneficios[0]} + ${beneficios[1].toLowerCase()} + prestaciones de ley. ${beneficios[2]}.
 
-📋 Envíanos un mensaje para conocer los requisitos completos.
+📋 ${ctaFb}.
 
 Comparte con quien necesite esta oportunidad 🙌
 
-#Empleo #Trabajo #${temaCapitalizado.replace(/\s+/g, "")} #Vacantes #OportunidadLaboral #BolsaDeTrabajo #ContrataciónInmediata #TrabajoEnMéxico`,
+${hashtagsFb}`,
     versionB: `📢 VACANTE: ${temaCapitalizado.toUpperCase()} — CONTRATACIÓN INMEDIATA
 
 📍 Ubicación: Varios establecimientos de tu zona
@@ -427,30 +660,30 @@ Comparte con quien necesite esta oportunidad 🙌
 • Mayor de 18 años
 • Disponibilidad de horario
 • Actitud de servicio
-• No se requiere experiencia previa
+• ${beneficios[2]}
 
 💼 Beneficios:
-• Salario competitivo con pago quincenal puntual
-• Horarios flexibles
+• ${beneficios[0]} con pago quincenal puntual
+• ${beneficios[1]}
 • Prestaciones de ley desde el primer día
 • Capacitación pagada
 • Oportunidades de crecimiento
 
-📋 ¿Cómo aplicar?
-Envíanos un mensaje directo para recibir toda la información y requisitos completos.
+📋 ¿Interesado?
+${ctaFb}.
 
-⚠️ Las vacantes son limitadas. Aplica lo antes posible.
+⚠️ ${cierre}. Actúa lo antes posible.
 
 📌 Disclaimer: Las vacantes son recopiladas de fuentes públicas de empleo.
 
 Comparte esta publicación con alguien que esté buscando trabajo 🤝
 
-#Empleo #Trabajo #${temaCapitalizado.replace(/\s+/g, "")} #Vacantes #OportunidadLaboral #BolsaDeTrabajo #ContrataciónInmediata #TrabajoEnMéxico #EmpleoUrgente #SinExperiencia`,
+${hashtagsFb} #EmpleoUrgente #SinExperiencia`,
     estrategia: `📊 ESTRATEGIA DE PUBLICACIÓN FACEBOOK:
-• Horarios óptimos: 9-11 AM y 1-3 PM entre semana; domingos 10 AM-12 PM.
+• Horarios óptimos: ${elegir(["9-11 AM y 1-3 PM entre semana; domingos 10 AM-12 PM", "8-10 AM y 2-4 PM entre semana; sábados 9-11 AM", "10 AM-12 PM y 3-5 PM entre semana; domingos 11 AM-1 PM"])}.
 • Comparte en grupos de empleo de la zona (mínimo 5 grupos por publicación).
 • Responde comentarios con información adicional para aumentar alcance orgánico.
-• Usa Facebook Stories para repostear el video con sticker de "Envíanos Mensaje".
+• Usa Facebook Stories para repostear el video con sticker de "${elegir(["Envíanos Mensaje", "Contáctanos", "Escríbenos"])}".
 • Programa publicaciones con Meta Business Suite para consistencia.`,
   };
 }
