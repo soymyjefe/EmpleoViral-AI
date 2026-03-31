@@ -27,7 +27,7 @@ export default function PaquetesRecientes() {
         {paquetes.length > 6 && (
           <Link
             href="/historial"
-            className="text-sm text-brand-500 hover:text-brand-600 font-medium"
+            className="text-sm text-purple-500 hover:text-purple-600 font-medium"
           >
             Ver todos ({paquetes.length})
           </Link>
@@ -41,10 +41,10 @@ export default function PaquetesRecientes() {
             <Link
               key={paquete.id}
               href={`/paquete?id=${paquete.id}`}
-              className="section-card hover:border-brand-300 transition-all group"
+              className="section-card hover:border-purple-300 transition-all group"
             >
               <div className="flex items-start justify-between mb-2">
-                <h3 className="font-semibold text-dark-800 group-hover:text-brand-600 transition-colors">
+                <h3 className="font-semibold text-dark-800 group-hover:text-purple-600 transition-colors">
                   {paquete.tema}
                 </h3>
                 <span className={estado.class}>{estado.label}</span>

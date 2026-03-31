@@ -24,7 +24,7 @@ export default function HistorialPage() {
   if (!mounted) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="w-8 h-8 border-4 border-brand-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -89,14 +89,14 @@ export default function HistorialPage() {
             return (
               <div
                 key={paquete.id}
-                className="section-card flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 hover:border-brand-300 transition-all"
+                className="section-card flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 hover:border-purple-300 transition-all"
               >
                 <Link
                   href={`/paquete?id=${paquete.id}`}
                   className="flex-1 min-w-0"
                 >
                   <div className="flex items-center gap-3 mb-1">
-                    <h3 className="font-semibold text-dark-800 hover:text-brand-600 transition-colors truncate">
+                    <h3 className="font-semibold text-dark-800 hover:text-purple-600 transition-colors truncate">
                       {paquete.tema}
                     </h3>
                     <span className={estado.class}>{estado.label}</span>

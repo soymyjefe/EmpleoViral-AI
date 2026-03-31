@@ -14,7 +14,7 @@ export default function GenerarPage() {
   return (
     <div className="flex items-center justify-center min-h-[60vh]">
       <div className="text-center">
-        <div className="w-16 h-16 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+        <div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
         <p className="text-gray-500">Redirigiendo...</p>
       </div>
     </div>

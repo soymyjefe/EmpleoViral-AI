@@ -17,7 +17,7 @@ export default function GeneradorProgress({
     <div className="fixed inset-0 z-50 bg-dark-950/80 backdrop-blur-sm flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 animate-fade-in">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-brand-400 to-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse-slow">
+          <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-brand-500 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse-slow">
             <span className="text-3xl">⚡</span>
           </div>
           <h2 className="text-xl font-bold text-dark-900">
@@ -40,7 +40,7 @@ export default function GeneradorProgress({
                   isCompleted
                     ? "bg-emerald-50"
                     : isCurrent
-                    ? "bg-brand-50 border border-brand-200"
+                    ? "bg-purple-50 border border-purple-200"
                     : "bg-gray-50"
                 }`}
               >
@@ -49,7 +49,7 @@ export default function GeneradorProgress({
                     isCompleted
                       ? "bg-emerald-500 text-white"
                       : isCurrent
-                      ? "bg-brand-500 text-white animate-pulse"
+                      ? "bg-purple-500 text-white animate-pulse"
                       : "bg-gray-200 text-gray-400"
                   }`}
                 >
@@ -60,7 +60,7 @@ export default function GeneradorProgress({
                     isCompleted
                       ? "text-emerald-700 font-medium"
                       : isCurrent
-                      ? "text-brand-700 font-medium"
+                      ? "text-purple-700 font-medium"
                       : "text-gray-400"
                   }`}
                 >
@@ -68,9 +68,9 @@ export default function GeneradorProgress({
                 </span>
                 {isCurrent && (
                   <div className="ml-auto flex gap-1">
-                    <div className="w-1.5 h-1.5 bg-brand-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                    <div className="w-1.5 h-1.5 bg-brand-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                    <div className="w-1.5 h-1.5 bg-brand-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                    <div className="w-1.5 h-1.5 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <div className="w-1.5 h-1.5 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <div className="w-1.5 h-1.5 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
                   </div>
                 )}
               </div>
@@ -81,7 +81,7 @@ export default function GeneradorProgress({
         <div className="mt-6">
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div
-              className="bg-gradient-to-r from-brand-400 to-brand-600 h-2 rounded-full transition-all duration-500"
+              className="bg-gradient-to-r from-purple-400 to-brand-500 h-2 rounded-full transition-all duration-500"
               style={{
                 width: `${((seccionActual) / secciones.length) * 100}%`,
               }}

@@ -32,7 +32,7 @@ export default function GaleriaTemas({ onSelectTema }: GaleriaTemasProps) {
                 <button
                   key={tema}
                   onClick={() => onSelectTema(tema)}
-                  className="px-3 py-1.5 bg-gray-50 hover:bg-brand-50 hover:text-brand-600 border border-gray-200 hover:border-brand-300 rounded-lg text-sm text-gray-700 transition-all"
+                  className="px-3 py-1.5 bg-gray-50 hover:bg-purple-50 hover:text-purple-600 border border-gray-200 hover:border-purple-300 rounded-lg text-sm text-gray-700 transition-all"
                 >
                   {tema}
                 </button>

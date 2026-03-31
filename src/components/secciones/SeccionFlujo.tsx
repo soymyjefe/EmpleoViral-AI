@@ -47,9 +47,9 @@ export default function SeccionFlujo({ data }: Props) {
         {pasos.map((paso) => (
           <div
             key={paso.numero}
-            className="flex gap-4 items-start bg-gray-50 rounded-lg px-5 py-4 border border-gray-100 hover:border-brand-200 transition-colors"
+            className="flex gap-4 items-start bg-gray-50 rounded-lg px-5 py-4 border border-gray-100 hover:border-purple-200 transition-colors"
           >
-            <div className="w-8 h-8 bg-brand-500 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
+            <div className="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
               {paso.numero}
             </div>
             <p className="text-sm text-dark-700 leading-relaxed pt-1">

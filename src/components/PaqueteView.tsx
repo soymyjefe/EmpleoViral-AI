@@ -53,7 +53,7 @@ export default function PaqueteView() {
   if (!mounted) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="w-8 h-8 border-4 border-brand-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -120,7 +120,7 @@ export default function PaqueteView() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-1">
-            <Link href="/" className="hover:text-brand-500">
+            <Link href="/" className="hover:text-purple-500">
               Inicio
             </Link>
             <span>/</span>
@@ -172,7 +172,7 @@ export default function PaqueteView() {
                 onClick={() => setSeccionActiva(key)}
                 className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all flex items-center gap-3 ${
                   seccionActiva === key
-                    ? "bg-brand-50 text-brand-700 border border-brand-200"
+                    ? "bg-purple-50 text-purple-700 border border-purple-200"
                     : "text-gray-600 hover:bg-gray-100 hover:text-gray-800"
                 }`}
               >

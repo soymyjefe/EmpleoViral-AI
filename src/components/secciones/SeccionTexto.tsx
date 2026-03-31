@@ -64,7 +64,7 @@ export default function SeccionTexto({ data }: Props) {
                     key={li}
                     className="border-b border-gray-100 hover:bg-gray-50"
                   >
-                    <td className="px-4 py-3 font-mono text-xs text-brand-600 font-semibold whitespace-nowrap">
+                    <td className="px-4 py-3 font-mono text-xs text-purple-600 font-semibold whitespace-nowrap">
                       {linea.segundo}
                     </td>
                     <td className="px-4 py-3 font-medium text-dark-800 whitespace-pre-wrap">

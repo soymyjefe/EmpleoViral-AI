@@ -10,8 +10,8 @@ interface Props {
 export default function SeccionNombre({ data }: Props) {
   return (
     <div className="space-y-4">
-      <div className="bg-gradient-to-r from-brand-50 to-amber-50 rounded-xl p-6 border border-brand-200">
-        <p className="text-xs font-semibold text-brand-600 uppercase tracking-wider mb-2">
+      <div className="bg-gradient-to-r from-purple-50 to-purple-100/50 rounded-xl p-6 border border-purple-200">
+        <p className="text-xs font-semibold text-purple-600 uppercase tracking-wider mb-2">
           Nombre Principal
         </p>
         <p className="text-2xl font-bold text-dark-900">{data.principal}</p>

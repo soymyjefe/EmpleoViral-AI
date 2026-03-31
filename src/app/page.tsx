@@ -94,7 +94,7 @@ export default function HomePage() {
       <div className="space-y-10">
         {/* Hero + Input */}
         <section className="text-center pt-8 pb-4">
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-dark-900 mb-3">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-purple-800 mb-3">
             Contenido Viral de Empleo
             <span className="text-brand-500"> en Minutos</span>
           </h1>
